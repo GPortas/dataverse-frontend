@@ -7,7 +7,7 @@ export function HelloDataverse() {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.title}>{t('title')}</h2>
+      <h2 className={styles.title}>Hello Braga!</h2>
       <img src={logo} className={styles.logo} alt={t('altImage')} />
       <p>
         <Trans t={t} i18nKey="description" components={{ 1: <code /> }} />
