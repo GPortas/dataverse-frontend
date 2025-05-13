@@ -141,7 +141,7 @@ jobs:
       # For BETA environment
       - name: Execute payara war deployment remotely on BETA
         if: ${{ github.event.inputs.environment == 'beta' }}
-        uses: appleboy/ssh-action@v0.1.8
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.BETA_PAYARA_INSTANCE_HOST }}
           username: ${{ secrets.BETA_PAYARA_INSTANCE_USERNAME }}
@@ -156,7 +156,7 @@ jobs:
       # For QA environment
       - name: Execute payara war deployment remotely on QA
         if: ${{ github.event.inputs.environment == 'qa' }}
-        uses: appleboy/ssh-action@v0.1.8
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.QA_PAYARA_INSTANCE_HOST }}
           username: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
