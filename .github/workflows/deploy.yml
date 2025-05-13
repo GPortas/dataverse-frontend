@@ -142,13 +142,12 @@ jobs:
       - name: Execute payara war deployment remotely on BETA
         if: ${{ github.event.inputs.environment == 'beta' }}
         uses: appleboy/ssh-action@v1.2.2
-        env:
-          INSTANCE_USERNAME: ${{ secrets.BETA_PAYARA_INSTANCE_USERNAME }}
         with:
           host: ${{ secrets.BETA_PAYARA_INSTANCE_HOST }}
           username: ${{ secrets.BETA_PAYARA_INSTANCE_USERNAME }}
           key: ${{ secrets.BETA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
           script: |
+            INSTANCE_USERNAME=${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
             APPLICATION_NAME=dataverse-frontend
             APPLICATION_WAR_PATH=/home/$INSTANCE_USERNAME/deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
@@ -159,13 +158,12 @@ jobs:
       - name: Execute payara war deployment remotely on QA
         if: ${{ github.event.inputs.environment == 'qa' }}
         uses: appleboy/ssh-action@v1.2.2
-        env:
-          INSTANCE_USERNAME: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
         with:
           host: ${{ secrets.QA_PAYARA_INSTANCE_HOST }}
           username: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
           key: ${{ secrets.QA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
           script: |
+            INSTANCE_USERNAME=${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
             APPLICATION_NAME=dataverse-frontend
             APPLICATION_WAR_PATH=/home/$INSTANCE_USERNAME/deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
