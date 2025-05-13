@@ -160,7 +160,7 @@ jobs:
         if: ${{ github.event.inputs.environment == 'qa' }}
         uses: appleboy/ssh-action@v1.2.2
         env:
-          INSTANCE_USERNAME: ${{ secrets.BETA_PAYARA_INSTANCE_USERNAME }}
+          INSTANCE_USERNAME: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
         with:
           host: ${{ secrets.QA_PAYARA_INSTANCE_HOST }}
           username: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
