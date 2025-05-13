@@ -150,8 +150,18 @@ jobs:
             APPLICATION_NAME=dataverse-frontend
             APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
-            DATAVERSE_FRONTEND=`$ASADMIN list-applications |grep $APPLICATION_NAME |awk '{print $1}'`
-            $ASADMIN undeploy $DATAVERSE_FRONTEND
+            
+            MATCHING_APPS=$($ASADMIN list-applications | grep $APPLICATION_NAME | awk '{print $1}')
+            COUNT=$(echo "$MATCHING_APPS" | wc -l)
+
+            if [ "$COUNT" -eq 1 ]; then
+              echo "Undeploying existing application: $MATCHING_APPS"
+              $ASADMIN undeploy "$MATCHING_APPS"
+            else
+              echo "Skipping undeploy. Expected 1 matching app, found $COUNT:"
+              echo "$MATCHING_APPS"
+            fi
+
             $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
 
       # For QA environment
@@ -166,6 +176,16 @@ jobs:
             APPLICATION_NAME=dataverse-frontend
             APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
-            DATAVERSE_FRONTEND=`$ASADMIN list-applications |grep $APPLICATION_NAME |awk '{print $1}'`
-            $ASADMIN undeploy $DATAVERSE_FRONTEND
+            
+            MATCHING_APPS=$($ASADMIN list-applications | grep $APPLICATION_NAME | awk '{print $1}')
+            COUNT=$(echo "$MATCHING_APPS" | wc -l)
+
+            if [ "$COUNT" -eq 1 ]; then
+              echo "Undeploying existing application: $MATCHING_APPS"
+              $ASADMIN undeploy "$MATCHING_APPS"
+            else
+              echo "Skipping undeploy. Expected 1 matching app, found $COUNT:"
+              echo "$MATCHING_APPS"
+            fi
+
             $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
