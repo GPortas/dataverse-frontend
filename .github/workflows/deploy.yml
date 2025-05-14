@@ -167,6 +167,5 @@ jobs:
             APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
             DATAVERSE_FRONTEND=`$ASADMIN list-applications |grep $APPLICATION_NAME |awk '{print $1}'`
-            $ASADMIN undeploy $DATAVERSE_FRONTEND
-            sudo -u dataverse
-            $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
+            sudo -u dataverse $ASADMIN undeploy $DATAVERSE_FRONTEND
+            sudo -u dataverse $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
