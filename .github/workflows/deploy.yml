@@ -126,18 +126,6 @@ jobs:
           target: '/home/${{ secrets.BETA_PAYARA_INSTANCE_USERNAME }}'
           overwrite: true
 
-      # For QA environment
-      - name: Copy war file to remote QA instance
-        if: ${{ github.event.inputs.environment == 'qa' }}
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.QA_PAYARA_INSTANCE_HOST }}
-          username: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
-          key: ${{ secrets.QA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
-          source: './deployment/payara/target/dataverse-frontend.war'
-          target: '/home/dataverse'
-          overwrite: true
-
       # For BETA environment
       - name: Execute payara war deployment remotely on BETA
         if: ${{ github.event.inputs.environment == 'beta' }}
