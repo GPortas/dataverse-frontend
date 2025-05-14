@@ -158,30 +158,14 @@ jobs:
       - name: Execute payara war deployment remotely on QA
         if: ${{ github.event.inputs.environment == 'qa' }}
         uses: appleboy/ssh-action@v1.2.2
-        env:
-          INSTANCE_USERNAME: centos
         with:
           host: ${{ secrets.QA_PAYARA_INSTANCE_HOST }}
           username: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
           key: ${{ secrets.QA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
           script: |
             APPLICATION_NAME=dataverse-frontend
-            APPLICATION_WAR_PATH=/home/$INSTANCE_USERNAME/deployment/payara/target/$APPLICATION_NAME.war
+            APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
-
-            echo "Checking for WAR at $APPLICATION_WAR_PATH"
-            ls -l $(dirname $APPLICATION_WAR_PATH)
-
-            if [ ! -f "$APPLICATION_WAR_PATH" ]; then
-              echo "ERROR: WAR file not found."
-              exit 1
-            fi
-
-            DEPLOYED_APP=$($ASADMIN list-applications | grep $APPLICATION_NAME | awk '{print $1}')
-            if [ -n "$DEPLOYED_APP" ]; then
-              $ASADMIN undeploy $DEPLOYED_APP
-            else
-              echo "App not deployed yet, skipping undeploy."
-            fi
-
+            DATAVERSE_FRONTEND=`$ASADMIN list-applications |grep $APPLICATION_NAME |awk '{print $1}'`
+            $ASADMIN undeploy $DATAVERSE_FRONTEND
             $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
