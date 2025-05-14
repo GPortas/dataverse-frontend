@@ -147,11 +147,11 @@ jobs:
           username: ${{ secrets.BETA_PAYARA_INSTANCE_USERNAME }}
           key: ${{ secrets.BETA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
           script: |
-            INSTANCE_USERNAME=${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
             APPLICATION_NAME=dataverse-frontend
             APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
-            $ASADMIN undeploy $APPLICATION_NAME
+            DATAVERSE_FRONTEND=`$ASADMIN list-applications |grep $APPLICATION_NAME |awk '{print $1}'`
+            $ASADMIN undeploy $DATAVERSE_FRONTEND
             $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
 
       # For QA environment
@@ -163,9 +163,9 @@ jobs:
           username: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
           key: ${{ secrets.QA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
           script: |
-            INSTANCE_USERNAME=${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
             APPLICATION_NAME=dataverse-frontend
             APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
-            $ASADMIN undeploy $APPLICATION_NAME
+            DATAVERSE_FRONTEND=`$ASADMIN list-applications |grep $APPLICATION_NAME |awk '{print $1}'`
+            $ASADMIN undeploy $DATAVERSE_FRONTEND
             $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
