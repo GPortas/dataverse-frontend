@@ -149,7 +149,7 @@ jobs:
           script: |
             INSTANCE_USERNAME=${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
             APPLICATION_NAME=dataverse-frontend
-            APPLICATION_WAR_PATH=/home/$INSTANCE_USERNAME/deployment/payara/target/$APPLICATION_NAME.war
+            APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
             $ASADMIN undeploy $APPLICATION_NAME
             $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
@@ -165,7 +165,7 @@ jobs:
           script: |
             INSTANCE_USERNAME=${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
             APPLICATION_NAME=dataverse-frontend
-            APPLICATION_WAR_PATH=/home/$INSTANCE_USERNAME/deployment/payara/target/$APPLICATION_NAME.war
+            APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
             $ASADMIN undeploy $APPLICATION_NAME
             $ASADMIN deploy --name $APPLICATION_NAME --contextroot /spa $APPLICATION_WAR_PATH
