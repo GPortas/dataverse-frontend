@@ -135,7 +135,7 @@ jobs:
           username: ${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}
           key: ${{ secrets.QA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
           source: './deployment/payara/target/dataverse-frontend.war'
-          target: '/home/${{ secrets.QA_PAYARA_INSTANCE_USERNAME }}'
+          target: '/home/dataverse'
           overwrite: true
 
       # For BETA environment
@@ -164,7 +164,7 @@ jobs:
           key: ${{ secrets.QA_PAYARA_INSTANCE_SSH_PRIVATE_KEY }}
           script: |
             APPLICATION_NAME=dataverse-frontend
-            APPLICATION_WAR_PATH=deployment/payara/target/$APPLICATION_NAME.war
+            APPLICATION_WAR_PATH=/home/dataverse/deployment/payara/target/$APPLICATION_NAME.war
             ASADMIN='/usr/local/payara6/bin/asadmin --user admin'
             DATAVERSE_FRONTEND=`$ASADMIN list-applications |grep $APPLICATION_NAME |awk '{print $1}'`
             $ASADMIN undeploy $DATAVERSE_FRONTEND
