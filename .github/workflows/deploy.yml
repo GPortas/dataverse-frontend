@@ -11,7 +11,7 @@ on:
           - beta
           - qa
       basepath:
-        description: 'Server basepath, without slashes, to serve the application (For example: spa).'
+        description: 'Server base path (without slashes) for serving the application (e.g., spa).'
         type: string
         required: false
 
@@ -81,7 +81,7 @@ jobs:
         shell: bash
 
       - name: Build with base path
-        run: npm run build -- --base=/${{ github.event.inputs.basepath || 'spa' }}
+        run: npm run build -- --base=/${{ github.event.inputs.basepath }}
 
       - uses: actions/upload-artifact@v4
         with:
